@@ -1,2 +1,3 @@
 class Document < ApplicationRecord
-end
+    enum state: [:concept, :alpha, :beta, :draft, :publish]
+  end

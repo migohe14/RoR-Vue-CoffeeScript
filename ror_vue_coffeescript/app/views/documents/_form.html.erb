@@ -1,32 +1,26 @@
-<%= form_with(model: document, local: true) do |form| %>
-  <% if document.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(document.errors.count, "error") %> prohibited this document from being saved:</h2>
+<% content_for :head do -%>
+  <%= javascript_pack_tag 'documents' %>
+<% end -%>
 
-      <ul>
-      <% document.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+<%= content_tag :div,
+  id: "document-form",
+  data: {
+    document: document.to_json(except: [:created_at, :updated_at])
+  } do %>
 
-  <div class="field">
-    <%= form.label :subject %>
-    <%= form.text_field :subject %>
-  </div>
+  <label>Subject</label>
+  <input type="text" v-model="document.subject" />
 
-  <div class="field">
-    <%= form.label :body %>
-    <%= form.text_area :body %>
-  </div>
+  <label>State</label>
+  <select v-model="document.state">
+    <%= options_for_select(Document.states.keys, "concept") %>
+  </select>
 
-  <div class="field">
-    <%= form.label :state %>
-    <%= form.number_field :state %>
-  </div>
+  <label>Body</label>
+  <textarea v-model="document.body" rows="20" cols="60"></textarea>
 
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+  <br />
+
+  <button v-on:click="Submit">Submit</button>
+
 <% end %>

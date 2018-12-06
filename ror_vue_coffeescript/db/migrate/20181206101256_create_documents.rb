@@ -4,7 +4,7 @@ class CreateDocuments < ActiveRecord::Migration[5.2]
       t.string :subject
       t.text :body
       t.integer :state, default: 0, null: false
-
+      
       t.timestamps
     end
     add_index :documents, :subject
